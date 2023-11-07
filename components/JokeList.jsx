@@ -10,24 +10,14 @@ export default function JokesList() {
   useEffect(() => {
     fetch('https://api.sampleapis.com/jokes/goodJokes')
       .then(res => res.json())
-      .then(shuffleJokes)
+      .then(setJokes)
       .catch(alert)
+      .finally(shuffleJokes)
   }, [])
 
-  const shuffleJokes = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      [array[j], array[i]] = [array[i], array[j]]
-    }
-    setJokes(array)
-  }
-
-  const nextJoke = () => {
-    if (currentJoke < jokes.length - 1) {
-      setCurrentJoke(currentJoke + 1)
-    } else {
-      setCurrentJoke(0) // loop back to first joke
-    }
+  const shuffleJokes = () => {
+    const j = Math.floor(Math.random() * jokes.length)
+    setCurrentJoke(j)
   }
 
   return (
@@ -36,7 +26,7 @@ export default function JokesList() {
         joke={!jokes ? 'Loading...' : jokes[currentJoke].setup} />
       <Punchline
         punchline={jokes && jokes[currentJoke].punchline} />
-      <Button onPress={nextJoke} title='Next Joke' />
+      <Button onPress={shuffleJokes} title='Next Joke' />
     </>
   )
 }
