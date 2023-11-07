@@ -16,8 +16,10 @@ export default function JokesList() {
   }, [])
 
   const shuffleJokes = () => {
-    const j = Math.floor(Math.random() * jokes.length)
-    setCurrentJoke(j)
+    if(jokes) {
+      const j = Math.floor(Math.random() * jokes.length)
+      setCurrentJoke(j)
+    }
   }
 
   return (
